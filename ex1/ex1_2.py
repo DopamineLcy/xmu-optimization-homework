@@ -2,7 +2,6 @@ import numpy as np
 
 
 def linesearch_secant(grad, f, x, d):
-
     def iter_dfx(dfx_k2):
         return dfx_k2, np.sum(grad(f, x + alpha_k2 * d) * d)
 
@@ -20,7 +19,6 @@ def linesearch_secant(grad, f, x, d):
             break
         dfx_k1, dfx_k2 = iter_dfx(dfx_k2)
         alpha_k1, alpha_k2 = iter_alpha(alpha_k1, alpha_k2)
-        # print(alpha_k1, alpha_k2, dfx_k1, dfx_k2)
 
     return alpha_k2
 

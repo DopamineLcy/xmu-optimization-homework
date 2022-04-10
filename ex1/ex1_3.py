@@ -1,5 +1,3 @@
-import torch
-from torch.autograd import Variable
 import numpy as np
 
 from ex1_2 import linesearch_secant
@@ -31,3 +29,5 @@ while True:
     alpha = linesearch_secant(grad, f, x, d)
     x = x + alpha*d
     print(x,f(x))
+    
+print('solution: ',x)
