@@ -10,7 +10,7 @@ def linesearch_secant(grad, f, x, d):
 
     eps = 1e-4
     alpha_k1 = 0
-    alpha_k2 = 0.0001
+    alpha_k2 = 0.001
     dfx_k1 = np.sum(grad(f, x) * d)
     dfx_k2 = dfx_k1
 
