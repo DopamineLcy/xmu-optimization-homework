@@ -32,16 +32,14 @@ def conjugate_gradient(f,x_0,cal_beta='Hestenes-Stiefel'):
     x = x_0
     g_k = grad(f, x_0)
     if abs(g_k[0])<1e-9 and abs(g_k[1])<1e-9:
-        return x
+        return x, cnt
     d = -1 * g_k
     while True:
         alpha = linesearch_secant(grad, f, x, d)
         x = x + alpha*d
         g_k1 = grad(f, x)
-        # print(g_k1)
         if abs(g_k1[0])<1e-9 and abs(g_k1[1])<1e-9:
-            print(cnt)
-            return x
+            return x, cnt
         if cal_beta =='Hestenes-Stiefel':
             beta = hestenes_stiefel(g_k, g_k1, d)
         elif cal_beta == 'Polak-Ribiere':
@@ -54,11 +52,12 @@ def conjugate_gradient(f,x_0,cal_beta='Hestenes-Stiefel'):
         cnt+=1
         if cnt%6==0:
             d = -1 * g_k
-        # print(x)
 
 x_0 = np.array([-2, 2])
 
 result1 = conjugate_gradient(f,x_0,cal_beta='Hestenes-Stiefel')
 result2 = conjugate_gradient(f,x_0,cal_beta='Polak-Ribiere')
 result3 = conjugate_gradient(f,x_0,cal_beta='Fletcher-Reeves')
-print(result1,result2,result3)
+print('使用Hestenes-Stiefel公式  ' + '结果: ', result1[0], '迭代次数: ', result1[1])
+print('使用Polak-Ribiere公式  ' + '结果: ', result2[0], '迭代次数: ', result2[1])
+print('使用Fletcher-Reeves公式  ' + '结果: ', result3[0], '迭代次数: ', result3[1])

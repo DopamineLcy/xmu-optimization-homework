@@ -40,14 +40,12 @@ def quasi_newton(f,x_0,H_0,cal_H='rank1'):
     g_k = grad(f, x)
     while True:
         if abs(g_k[0])<1e-9 and abs(g_k[1])<1e-9:
-            return x
+            return x, cnt
         d = -np.dot(H, g_k)
         alpha = linesearch_secant(grad, f, x, d)
         x = x + alpha*d
-
         delta_x = alpha*d
         g_k1 = grad(f, x)
-        print(g_k1)
         delta_g = g_k1 - g_k
         if cal_H == 'rank1':
             H = rank1(H,delta_x,delta_g)
@@ -57,18 +55,19 @@ def quasi_newton(f,x_0,H_0,cal_H='rank1'):
             H = BFGS(H,delta_x,delta_g)
 
         if abs(g_k1[0])<1e-9 and abs(g_k1[1])<1e-9:
-            print(cnt)
-            return x
+            return x, cnt
         g_k = g_k1
         
         cnt+=1
         if cnt%6==0:
             d = -1 * g_k
-        print(x)
 
 x_0 = np.array([-2, 2])
 H_0 = np.array([[1,0],[0,1]])
 result1 = quasi_newton(f, x_0, H_0, cal_H='rank1')
 result2 = quasi_newton(f, x_0, H_0, cal_H='DFP')
 result3 = quasi_newton(f, x_0, H_0, cal_H='BFGS')
-print(result1,result2,result3)
+# print(result1,result2,result3)
+print('使用秩1算法  ' + '结果: ', result1[0], '迭代次数: ', result1[1])
+print('使用DFP算法  ' + '结果: ', result2[0], '迭代次数: ', result2[1])
+print('使用BFGS算法  ' + '结果: ', result3[0], '迭代次数: ', result3[1])
