@@ -15,8 +15,8 @@ def two_stages_simplex(A, b, c):
         base += 1
     b, A, index = simplex(A_extended, b, c_tmp, index)
     A = A[:, : -len(b)]
-    result, _, _ = simplex(A, b, c, index)
-    return result
+    result, _, index = simplex(A, b, c, index)
+    return result, index
 
 
 A = np.array(
@@ -42,5 +42,5 @@ c = np.array(
     ]
 )
 
-result = two_stages_simplex(A, b, c)
-print(result)
+result, index = two_stages_simplex(A, b, c)
+print(result,index)

@@ -73,5 +73,5 @@ if __name__ == '__main__':
 
     index = [2, 3, 4]
 
-    result, _, _ = simplex(A, b, c, index)
-    print(result)
+    result, _, index = simplex(A, b, c, index)
+    print(result, index)
